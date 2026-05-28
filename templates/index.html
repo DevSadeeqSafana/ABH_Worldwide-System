@@ -781,10 +781,10 @@ async function initApp(){
   $('tb-dt').textContent=new Date().toLocaleDateString('en-NG',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
   CATS=await api('/api/categories');
   const items=ME.role==='admin'?ADMIN_NAV:STAFF_NAV;
-  const nav=$('sb-nav');nav.innerHTML='';let lastSec='';
+  const sbNav=$('sb-nav');sbNav.innerHTML='';let lastSec='';
   items.forEach(it=>{
-    if(it.sec&&it.sec!==lastSec){nav.innerHTML+=`<div class="nav-sec">${it.sec}</div>`;lastSec=it.sec;}
-    nav.innerHTML+=`<div class="nav-it" id="ni-${it.id}" onclick="nav('${it.id}')"><i class="${it.icon}"></i>${it.label}</div>`;
+    if(it.sec&&it.sec!==lastSec){sbNav.innerHTML+=`<div class="nav-sec">${it.sec}</div>`;lastSec=it.sec;}
+    sbNav.innerHTML+=`<div class="nav-it" id="ni-${it.id}" onclick="nav('${it.id}')"><i class="${it.icon}"></i>${it.label}</div>`;
   });
   nav(ME.role==='admin'?'dashboard':'pos');
 }

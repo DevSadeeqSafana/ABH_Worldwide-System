@@ -31,7 +31,7 @@ class User(db.Model):
     phone = db.Column(db.String(20), default='')
     active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    def set_password(self, pw): self.password_hash = generate_password_hash(pw)
+    def set_password(self, pw): self.password_hash = generate_password_hash(pw, method='pbkdf2:sha256')
     def check_password(self, pw): return check_password_hash(self.password_hash, pw)
 
 class Category(db.Model):
@@ -145,7 +145,8 @@ def login_required(f):
     @wraps(f)
     def dec(*a, **kw):
         if 'user_id' not in session:
-            if request.is_json: return jsonify({'error': 'Not authenticated'}), 401
+            if request.path.startswith('/api/') or request.is_json:
+                return jsonify({'error': 'Not authenticated'}), 401
             return redirect(url_for('login'))
         return f(*a, **kw)
     return dec
@@ -281,14 +282,20 @@ def dashboard():
 @app.route('/api/me')
 @login_required
 def api_me():
-    u = User.query.get(session['user_id'])
+    u = db.session.get(User, session['user_id'])
+    if not u:
+        session.clear()
+        return jsonify({'error': 'User not found'}), 401
     return jsonify({'id':u.id,'name':u.full_name,'username':u.username,'role':u.role,'phone':u.phone or ''})
 
 @app.route('/api/me/update', methods=['POST'])
 @login_required
 def api_me_update():
     d = request.get_json()
-    u = User.query.get(session['user_id'])
+    u = db.session.get(User, session['user_id'])
+    if not u:
+        session.clear()
+        return jsonify({'success':False,'error':'User not found'}), 401
     if d.get('full_name'): u.full_name = d['full_name']
     if d.get('username'):
         ex = User.query.filter_by(username=d['username']).first()
@@ -321,7 +328,7 @@ def api_categories():
 @app.route('/api/categories/<int:cid>', methods=['PUT','DELETE'])
 @login_required
 def api_category(cid):
-    c = Category.query.get_or_404(cid)
+    c = db.get_or_404(Category, cid)
     if request.method == 'DELETE':
         active_prods = [p for p in c.products if p.active]
         if active_prods: return jsonify({'success':False,'error':'Cannot delete: category has products'})
@@ -362,7 +369,7 @@ def api_products():
 @app.route('/api/products/<int:pid>', methods=['GET','PUT','DELETE'])
 @login_required
 def api_product(pid):
-    p = Product.query.get_or_404(pid)
+    p = db.get_or_404(Product, pid)
     if request.method == 'DELETE':
         p.active = False; db.session.commit()
         return jsonify({'success':True})
@@ -407,7 +414,7 @@ def api_customers():
 @app.route('/api/customers/<int:cid>', methods=['PUT','DELETE'])
 @login_required
 def api_customer(cid):
-    c = Customer.query.get_or_404(cid)
+    c = db.get_or_404(Customer, cid)
     if request.method == 'DELETE':
         c.active = False; db.session.commit(); return jsonify({'success':True})
     d = request.get_json()
@@ -439,7 +446,7 @@ def api_customer_history(cid):
 @login_required
 def api_pay_debt():
     d = request.get_json()
-    sale = Sale.query.get_or_404(d['sale_id'])
+    sale = db.get_or_404(Sale, d['sale_id'])
     amount = float(d['amount'])
     if amount > sale.balance_due + 0.01:
         return jsonify({'success':False,'error':'Payment exceeds balance'})
@@ -475,7 +482,7 @@ def api_sales():
         )
         db.session.add(sale); db.session.flush()
         for item in items:
-            prod = Product.query.get(int(item['product_id']))
+            prod = db.session.get(Product, int(item['product_id']))
             if not prod or prod.quantity < float(item['quantity']):
                 db.session.rollback()
                 return jsonify({'success':False,'error':f'Insufficient stock for {item["product_name"]}'})
@@ -511,7 +518,7 @@ def api_sales():
 @app.route('/api/sales/<int:sid>')
 @login_required
 def api_sale(sid):
-    s = Sale.query.get_or_404(sid)
+    s = db.get_or_404(Sale, sid)
     return jsonify({'id':s.id,'receipt_no':s.receipt_no,
         'customer':{'id':s.customer.id,'name':s.customer.full_name,'phone':s.customer.phone} if s.customer else None,
         'staff':s.staff.full_name if s.staff else '',
@@ -541,7 +548,7 @@ def api_staff():
 @app.route('/api/staff/<int:uid>', methods=['PUT','DELETE'])
 @login_required
 def api_staff_member(uid):
-    u = User.query.get_or_404(uid)
+    u = db.get_or_404(User, uid)
     if request.method == 'DELETE':
         u.active = False; db.session.commit(); return jsonify({'success':True})
     d = request.get_json()
@@ -648,13 +655,15 @@ def migrate_db():
     try:
         conn = sqlite3.connect(db_path)
         cur = conn.cursor()
-        # Check if payment_method column exists
-        cur.execute("PRAGMA table_info(sale)")
-        cols = [row[1] for row in cur.fetchall()]
-        if 'payment_method' not in cols:
-            cur.execute("ALTER TABLE sale ADD COLUMN payment_method VARCHAR(20) DEFAULT 'Cash'")
-            conn.commit()
-            print("✅ Migrated: added payment_method column to sale table")
+        # Check if sale table exists first
+        cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='sale'")
+        if cur.fetchone():
+            cur.execute("PRAGMA table_info(sale)")
+            cols = [row[1] for row in cur.fetchall()]
+            if 'payment_method' not in cols:
+                cur.execute("ALTER TABLE sale ADD COLUMN payment_method VARCHAR(20) DEFAULT 'Cash'")
+                conn.commit()
+                print("✅ Migrated: added payment_method column to sale table")
         conn.close()
     except Exception as e:
         print(f"Migration note: {e}")
