@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ABH WORLDWIDE MULTIPURPOSE COMPANY</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --pr:#1a56db;--prd:#1e429f;--prl:#eff6ff;
+  --sc:#16a34a;--scl:#f0fdf4;
+  --dn:#dc2626;--dnl:#fef2f2;
+  --wn:#d97706;--wnl:#fffbeb;
+  --sb:#0f172a;--sbw:240px;--hh:54px;
+  --r:8px;--rl:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f1f5f9;color:#1e293b;font-size:14px;min-height:100vh}
+
+/* AUTH */
+#auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1a56db);padding:1rem}
+.auth-card{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:400px;box-shadow:0 25px 60px rgba(0,0,0,.3)}
+.auth-tabs{display:flex;gap:.3rem;background:#f1f5f9;padding:.25rem;border-radius:8px;margin:1.1rem 0}
+.auth-tab{flex:1;padding:.42rem;border:none;background:none;border-radius:6px;cursor:pointer;font-size:.82rem;color:#64748b;font-weight:500;transition:.15s}
+.auth-tab.active{background:#fff;color:var(--pr);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* APP SHELL */
+#app{display:none}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:150}
+.overlay.on{display:block}
+.sidebar{width:var(--sbw);background:var(--sb);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .25s}
+.sb-brand{padding:1rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.sb-title{font-size:.72rem;font-weight:800;color:#fff;line-height:1.45;letter-spacing:.01em}
+.sb-sub{font-size:.62rem;color:#94a3b8;margin-top:.15rem}
+.nav-sec{padding:.6rem 1rem .18rem;font-size:.58rem;font-weight:700;color:#475569;letter-spacing:.1em;text-transform:uppercase}
+.nav-it{display:flex;align-items:center;gap:.6rem;padding:.5rem 1rem;color:#94a3b8;cursor:pointer;font-size:.8rem;transition:.12s;border-left:3px solid transparent;user-select:none;white-space:nowrap}
+.nav-it:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-it.on{color:#fff;background:rgba(26,86,219,.3);border-left-color:var(--pr)}
+.nav-it i{width:15px;text-align:center;font-size:.83rem;flex-shrink:0}
+.sb-foot{padding:.875rem 1rem;border-top:1px solid rgba(255,255,255,.07);margin-top:auto;flex-shrink:0}
+.av{width:32px;height:32px;border-radius:50%;background:var(--pr);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.73rem;color:#fff;flex-shrink:0}
+
+/* MAIN */
+.main{margin-left:var(--sbw);display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:var(--hh);background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;position:sticky;top:0;z-index:100}
+.ham{display:none;background:none;border:none;font-size:1.2rem;color:#64748b;cursor:pointer;padding:.2rem;margin-right:.5rem}
+.pg-title{font-size:.95rem;font-weight:700;color:#0f172a}
+.pg-body{padding:1rem;flex:1}
+.page{display:none}.page.on{display:block}
+
+/* STAT CARDS */
+.scard{background:#fff;border-radius:var(--rl);padding:.875rem 1rem;border:1px solid #e2e8f0;height:100%}
+.sicon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;margin-bottom:.5rem}
+.ib{background:#eff6ff;color:var(--pr)}.ig{background:#f0fdf4;color:var(--sc)}
+.ir{background:#fef2f2;color:var(--dn)}.iy{background:#fefce8;color:#ca8a04}
+.ip{background:#faf5ff;color:#9333ea}.io{background:#fff7ed;color:#ea580c}
+.slabel{font-size:.62rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem}
+.sval{font-size:1.25rem;font-weight:700;color:#0f172a;line-height:1}
+.ssub{font-size:.67rem;color:#94a3b8;margin-top:.2rem}
+
+/* CARDS */
+.card{border:1px solid #e2e8f0;border-radius:var(--rl);box-shadow:none}
+.card-header{background:#fff;border-bottom:1px solid #f1f5f9;padding:.72rem 1rem;font-weight:700;font-size:.84rem}
+
+/* PRODUCT CARDS */
+.pcard{background:#fff;border:1.5px solid #e2e8f0;border-radius:var(--rl);padding:.875rem;transition:.12s;position:relative;height:100%}
+.pcard:hover{border-color:#93c5fd;box-shadow:0 2px 12px rgba(26,86,219,.07)}
+.pc-cat{font-size:.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.28rem}
+.pc-name{font-size:.85rem;font-weight:700;color:#0f172a;margin-bottom:.4rem;line-height:1.3}
+.pc-sell{font-size:.92rem;font-weight:700;color:var(--pr)}
+.pc-buy{font-size:.7rem;color:#94a3b8}
+.pc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.22rem;margin-top:.38rem;padding-top:.38rem;border-top:1px solid #f1f5f9}
+.pm-lbl{font-size:.57rem;color:#94a3b8;font-weight:600;text-transform:uppercase}
+.pm-val{font-size:.75rem;font-weight:700}
+.sbar{height:4px;border-radius:3px;background:#e2e8f0;overflow:hidden;margin-top:.38rem}
+.sfh{background:#22c55e}.sfm{background:#f59e0b}.sfl{background:#ef4444}
+.pact{position:absolute;top:.4rem;right:.4rem;display:flex;gap:.18rem;opacity:0;transition:.12s}
+.pcard:hover .pact{opacity:1}
+
+/* BADGES */
+.b{display:inline-flex;align-items:center;padding:.16rem .48rem;border-radius:9999px;font-size:.64rem;font-weight:600;white-space:nowrap}
+.b-paid{background:#dcfce7;color:#166534}
+.b-part{background:#fef9c3;color:#854d0e}
+.b-unp{background:#fee2e2;color:#991b1b}
+.b-high{background:#dcfce7;color:#166534}
+.b-medium{background:#fef9c3;color:#854d0e}
+.b-low{background:#fee2e2;color:#991b1b}
+.b-pr{background:var(--prl);color:var(--pr)}
+.b-gray{background:#f1f5f9;color:#475569}
+.b-cash{background:#f0fdf4;color:#166534}
+.b-transfer{background:#eff6ff;color:#1e429f}
+.b-pos{background:#faf5ff;color:#7e22ce}
+.debt-b{background:#fee2e2;color:#991b1b;font-size:.64rem;padding:.16rem .48rem;border-radius:6px;font-weight:600;white-space:nowrap}
+
+/* TABLES */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl th{font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;color:#64748b;background:#f8fafc;padding:.48rem .75rem;white-space:nowrap;font-weight:700;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:2}
+.tbl td{padding:.52rem .75rem;font-size:.79rem;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+.tbl tr:hover td{background:#f8fafc}
+
+/* POS TILES */
+.ptile{border:2px solid #e2e8f0;border-radius:10px;padding:.72rem;cursor:pointer;transition:.12s;background:#fff;user-select:none;height:100%}
+.ptile:hover{border-color:#93c5fd;background:var(--prl)}
+.ptile.oos{opacity:.38;cursor:not-allowed;pointer-events:none}
+.pt-n{font-size:.8rem;font-weight:700;color:#0f172a;margin-bottom:.15rem;line-height:1.25}
+.pt-p{font-size:.88rem;font-weight:700;color:var(--pr)}
+.pt-a{font-size:.62rem;color:#94a3b8;margin-top:.12rem}
+
+/* CART */
+.ctbl td,.ctbl th{padding:.32rem .5rem;vertical-align:middle;font-size:.77rem}
+.ctbl th{background:#f8fafc;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#64748b}
+.qi{width:56px;text-align:center;padding:.18rem .28rem;border:1.5px solid #e2e8f0;border-radius:6px;font-size:.8rem;outline:none}
+.qi:focus{border-color:var(--pr)}
+.pi{width:90px;padding:.18rem .38rem;border:1.5px solid #e2e8f0;border-radius:6px;font-size:.8rem;outline:none}
+.pi:focus{border-color:var(--pr)}
+.pi.custom{border-color:#f59e0b !important;background:#fefce8}
+
+/* PAYMENT METHOD BUTTONS */
+.pm-btns{display:flex;gap:.5rem;margin-bottom:.75rem}
+.pm-btn{flex:1;padding:.5rem .3rem;border:2px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;transition:.15s;text-align:center;font-size:.75rem;font-weight:600;color:#64748b}
+.pm-btn:hover{border-color:#93c5fd;background:var(--prl);color:var(--pr)}
+.pm-btn.sel-cash{border-color:#16a34a;background:#f0fdf4;color:#166534}
+.pm-btn.sel-transfer{border-color:var(--pr);background:var(--prl);color:var(--prd)}
+.pm-btn.sel-pos{border-color:#7e22ce;background:#faf5ff;color:#7e22ce}
+.pm-btn i{display:block;font-size:1.1rem;margin-bottom:.18rem}
+
+/* RECEIPT */
+.rbox{max-width:320px;margin:0 auto;border:2px dashed #d1d5db;border-radius:12px;padding:1.2rem;font-family:'Courier New',monospace;font-size:.77rem}
+.rbox h3{text-align:center;font-size:.9rem;font-family:'Segoe UI',sans-serif;font-weight:800}
+.rsub{text-align:center;font-size:.65rem;color:#6b7280;margin-bottom:.55rem}
+.rr{display:flex;justify-content:space-between;padding:.1rem 0}
+.rtot{font-weight:700;font-size:.88rem}
+
+/* FORMS */
+.form-label{font-size:.74rem;font-weight:600;color:#374151;margin-bottom:.24rem}
+.form-control,.form-select{font-size:.82rem;border:1.5px solid #e2e8f0;border-radius:8px;padding:.44rem .68rem}
+.form-control:focus,.form-select:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(26,86,219,.1);outline:none}
+.form-control-sm,.form-select-sm{font-size:.78rem;padding:.33rem .58rem}
+
+/* BAR CHART */
+.bchart{display:flex;align-items:flex-end;gap:4px;height:90px;padding-top:.35rem}
+.bcc{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bcb{width:100%;background:var(--pr);border-radius:4px 4px 0 0;min-height:3px;opacity:.8}
+.bcb:hover{opacity:1}
+.bcl{font-size:.55rem;color:#94a3b8}
+.bcv{font-size:.55rem;color:#64748b;font-weight:600}
+
+/* PRINT */
+@media print{body *{visibility:hidden}.pzone,.pzone *{visibility:visible}.pzone{position:fixed;left:0;top:0;width:100%;padding:1rem}}
+
+/* CUST CARD */
+.cust-result{background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;padding:.55rem .75rem;cursor:pointer;transition:.12s;font-size:.77rem;margin-bottom:.3rem}
+.cust-result:hover{border-color:#93c5fd;background:var(--prl)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:991px){:root{--sbw:220px}}
+
+@media(max-width:767px){
+  :root{--sbw:240px}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .ham{display:flex !important}
+  .pg-body{padding:.75rem}
+  .sval{font-size:1rem}
+  .scard{padding:.72rem .875rem}
+  .pcard{padding:.72rem}
+  .pos-cart-col{order:-1}
+}
+
+@media(max-width:480px){
+  .auth-card{padding:1.4rem}
+  .sval{font-size:.9rem}
+  .pm-btn{font-size:.7rem;padding:.4rem .2rem}
+  .pm-btn i{font-size:.9rem}
+}
+
+@media(min-width:1400px){:root{--sbw:255px}}
+</style>
+</head>
+<body>
+
+<!-- ═══ AUTH ═══ -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="text-center mb-2">
+      <div style="font-size:2.2rem;color:var(--pr)"><i class="fas fa-globe-africa"></i></div>
+      <div style="font-size:.98rem;font-weight:800;color:#0f172a;line-height:1.3;margin-top:.3rem">ABH WORLDWIDE<br>MULTIPURPOSE COMPANY</div>
+      <div style="font-size:.7rem;color:#64748b;margin-top:.2rem">Inventory &amp; Sales Management System</div>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('admin')"><i class="fas fa-shield-halved me-1"></i>Admin</button>
+      <button class="auth-tab" onclick="switchTab('staff')"><i class="fas fa-user me-1"></i>Staff</button>
+    </div>
+
+    <div class="mb-2"><label class="form-label">Username</label><input class="form-control" id="lu" placeholder="Enter username" autocomplete="username"></div>
+    <div class="mb-2"><label class="form-label">Password</label><input type="password" class="form-control" id="lp" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div id="lerr" class="alert alert-danger py-2 px-3 mb-2" style="display:none;font-size:.77rem"></div>
+    <button class="btn btn-primary w-100" onclick="doLogin()"><i class="fas fa-right-to-bracket me-1"></i>Sign In</button>
+    <div class="text-center mt-3">
+      <button onclick="doForgotPassword()" style="background:none;border:none;cursor:pointer;color:#1a56db;font-size:.82rem;font-weight:600;padding:.25rem .5rem;border-radius:6px;text-decoration:underline;text-underline-offset:3px">
+        <i class="fas fa-key me-1"></i>Forgot Password? (Admin only)
+      </button>
+    </div>
+    <div id="fp-msg" style="display:none;margin-top:.75rem"></div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+  <div class="overlay" id="ov" onclick="closeSB()"></div>
+  <aside class="sidebar" id="sb">
+    <div class="sb-brand">
+      <div class="sb-title">ABH WORLDWIDE<br>MULTIPURPOSE CO.</div>
+      <div class="sb-sub" id="sb-role">Admin Panel</div>
+    </div>
+    <nav id="sb-nav" style="flex:1;overflow-y:auto"></nav>
+    <div class="sb-foot">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <div class="av" id="sb-av">A</div>
+        <div style="min-width:0">
+          <div style="font-size:.78rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="sb-nm">Admin</div>
+          <div style="font-size:.65rem;color:#94a3b8" id="sb-r2">Super Admin</div>
+        </div>
+      </div>
+      <button class="btn btn-sm w-100" style="background:rgba(255,255,255,.07);color:#94a3b8;border:1px solid rgba(255,255,255,.1);font-size:.73rem" onclick="doLogout()"><i class="fas fa-right-from-bracket me-1"></i>Sign Out</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="d-flex align-items-center">
+        <button class="ham" id="ham" onclick="openSB()"><i class="fas fa-bars"></i></button>
+        <span class="pg-title" id="pg-title">Dashboard</span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span id="ls-bdg" class="b b-low" style="display:none"><i class="fas fa-triangle-exclamation me-1"></i>Low Stock</span>
+        <span style="font-size:.68rem;color:#94a3b8;white-space:nowrap" id="tb-dt"></span>
+      </div>
+    </header>
+
+    <main class="pg-body">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div class="page" id="page-dashboard">
+        <div class="row g-2 mb-3" id="dash-stats"></div>
+        <div class="row g-3">
+          <div class="col-lg-8">
+            <div class="card mb-3">
+              <div class="card-header"><i class="fas fa-chart-bar text-primary me-1"></i>Monthly Sales</div>
+              <div class="card-body p-3"><div class="bchart" id="dash-chart"></div></div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-clock-rotate-left text-primary me-1"></i>Recent Sales</span>
+                <button class="btn btn-sm btn-outline-primary" onclick="nav('sales-mgmt')">View All</button>
+              </div>
+              <div class="tw"><table class="table tbl mb-0">
+                <thead><tr><th>Receipt</th><th>Customer</th><th>Method</th><th>Total</th><th>Staff</th><th>Date</th></tr></thead>
+                <tbody id="dash-sales"></tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card mb-3">
+              <div class="card-header"><i class="fas fa-fire text-warning me-1"></i>Top Products</div>
+              <div id="dash-top"></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><i class="fas fa-triangle-exclamation text-danger me-1"></i>Low Stock Alerts</div>
+              <div id="dash-low"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ PRODUCTS ══ -->
+      <div class="page" id="page-products">
+        <div class="d-flex flex-wrap gap-2 mb-2 align-items-center">
+          <input class="form-control form-control-sm" style="max-width:190px" placeholder="Search products…" id="prod-q" oninput="loadProds()">
+          <select class="form-select form-select-sm" style="max-width:165px" id="prod-cf" onchange="prodCF=this.value;loadProds()"><option value="">All Categories</option></select>
+          <select class="form-select form-select-sm" style="max-width:160px" id="prod-pf" onchange="prodPF=this.value;loadProds()">
+            <option value="">All Payments</option>
+            <option value="Fully Paid">✅ Fully Paid</option>
+            <option value="Partially Paid">⚠️ Partially Paid</option>
+            <option value="Not Paid">❌ Not Paid</option>
+          </select>
+          <div class="ms-auto d-flex gap-2">
+            <button class="btn btn-primary btn-sm" onclick="openProdMdl()"><i class="fas fa-plus me-1"></i><span class="d-none d-sm-inline">Add Product</span><span class="d-sm-none">Add</span></button>
+            <button class="btn btn-outline-secondary btn-sm" onclick="openCatMdl()"><i class="fas fa-tags me-1"></i><span class="d-none d-sm-inline">Categories</span><span class="d-sm-none">Cats</span></button>
+          </div>
+        </div>
+        <div id="prod-cat-tabs" class="d-flex gap-1 flex-wrap mb-3"></div>
+        <div class="row g-2" id="prods-grid"></div>
+      </div>
+
+      <!-- ══ POS ══ -->
+      <div class="page" id="page-pos">
+        <div class="row g-3">
+          <!-- Cart col — shown first on mobile -->
+          <div class="col-lg-5 pos-cart-col">
+            <div class="card" style="position:sticky;top:calc(var(--hh) + 8px)">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-cart-shopping text-success me-1"></i>Cart</span>
+                <button class="btn btn-sm btn-outline-danger" id="clr-btn" onclick="clearCart()" style="display:none"><i class="fas fa-trash"></i></button>
+              </div>
+              <div class="card-body p-2">
+                <div id="cart-empty" class="text-center py-3 text-muted">
+                  <i class="fas fa-shopping-basket fa-2x mb-2 d-block"></i>
+                  <small>Tap a product to add to cart</small>
+                </div>
+                <div id="cart-body" style="display:none">
+                  <div class="tw" style="max-height:180px;overflow-y:auto">
+                    <table class="table ctbl mb-1">
+                      <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr></thead>
+                      <tbody id="cart-rows"></tbody>
+                    </table>
+                  </div>
+                  <div class="d-flex justify-content-between border-top pt-2 pb-1" style="font-size:.82rem">
+                    <span>Subtotal</span><strong id="cart-sub">₦0</strong>
+                  </div>
+
+                  <!-- PAYMENT METHOD -->
+                  <div class="mb-2">
+                    <label class="form-label">Payment Method</label>
+                    <div class="pm-btns">
+                      <button class="pm-btn sel-cash" id="pm-cash" onclick="selPM('Cash')">
+                        <i class="fas fa-money-bill-wave"></i>Cash
+                      </button>
+                      <button class="pm-btn" id="pm-transfer" onclick="selPM('Transfer')">
+                        <i class="fas fa-building-columns"></i>Transfer
+                      </button>
+                      <button class="pm-btn" id="pm-pos" onclick="selPM('POS')">
+                        <i class="fas fa-credit-card"></i>POS
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- AMOUNT PAID -->
+                  <div class="mb-2">
+                    <label class="form-label">Amount Paid (₦) <small class="text-muted">— blank = full payment</small></label>
+                    <input type="number" class="form-control form-control-sm" id="pos-paid" oninput="calcBal()" placeholder="Leave blank for full payment">
+                    <div class="d-flex justify-content-between mt-1" style="font-size:.73rem">
+                      <span class="text-muted">Balance Due:</span>
+                      <strong id="pos-bal" style="color:#dc2626">₦0</strong>
+                    </div>
+                  </div>
+
+                  <!-- CUSTOMER SEARCH -->
+                  <div class="mb-2">
+                    <label class="form-label">Customer <small class="text-muted">(optional)</small></label>
+                    <div class="input-group input-group-sm">
+                      <input class="form-control" id="cpos-q" placeholder="Name, shop, phone…" oninput="srchCustPOS()">
+                      <button class="btn btn-outline-secondary" onclick="clrCustPOS()" title="Clear"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="cpos-res" style="max-height:85px;overflow-y:auto;margin-top:3px"></div>
+                    <div id="cpos-sel" style="display:none;margin-top:.28rem;background:#f0fdf4;border-radius:6px;padding:.32rem .55rem;font-size:.73rem;color:#166534"></div>
+                  </div>
+
+                  <div class="mb-2">
+                    <label class="form-label">Notes <small class="text-muted">(optional)</small></label>
+                    <input class="form-control form-control-sm" id="pos-notes" placeholder="Any note…">
+                  </div>
+
+                  <button class="btn btn-success w-100 btn-sm fw-semibold" onclick="checkout()">
+                    <i class="fas fa-check-circle me-1"></i>Complete Sale &amp; Generate Receipt
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Products col -->
+          <div class="col-lg-7">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <span><i class="fas fa-store text-primary me-1"></i>Select Products</span>
+                <input class="form-control form-control-sm" style="max-width:175px" placeholder="Search…" id="pos-q" oninput="loadTiles()">
+              </div>
+              <div class="card-body">
+                <div id="pos-cat-tabs" class="d-flex gap-1 flex-wrap mb-2"></div>
+                <div class="row g-2" id="pos-tiles" style="max-height:360px;overflow-y:auto"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Receipt output -->
+        <div id="rcpt-area" style="display:none;margin-top:1rem">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <span><i class="fas fa-receipt text-success me-1"></i>Receipt Generated</span>
+              <div class="d-flex gap-2 flex-wrap">
+                <button class="btn btn-sm btn-outline-primary" onclick="window.print()"><i class="fas fa-print me-1"></i>Print</button>
+                <button class="btn btn-sm btn-success" onclick="shareWA()"><i class="fab fa-whatsapp me-1"></i>WhatsApp</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="newSale()"><i class="fas fa-plus me-1"></i>New Sale</button>
+              </div>
+            </div>
+            <div class="card-body pzone" id="rcpt-display"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SALES MGMT ══ -->
+      <div class="page" id="page-sales-mgmt">
+        <div class="card">
+          <div class="card-header d-flex flex-wrap gap-2 align-items-center">
+            <span>Sales Records</span>
+            <div class="d-flex gap-2 ms-auto flex-wrap">
+              <input class="form-control form-control-sm" style="max-width:155px" placeholder="Receipt no…" id="sm-q" oninput="loadSM()">
+              <input type="date" class="form-control form-control-sm" style="max-width:138px" id="sm-date" onchange="loadSM()">
+              <select class="form-select form-select-sm" style="max-width:125px" id="sm-staff" onchange="loadSM()"><option value="">All Staff</option></select>
+            </div>
+          </div>
+          <div class="tw"><table class="table tbl mb-0">
+            <thead><tr><th>Receipt</th><th>Customer</th><th>Items</th><th>Method</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Staff</th><th>Date</th><th></th></tr></thead>
+            <tbody id="sm-rows"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══ CUSTOMERS ══ -->
+      <div class="page" id="page-customers">
+        <div class="d-flex gap-2 mb-3 align-items-center flex-wrap">
+          <input class="form-control form-control-sm" style="max-width:220px" placeholder="Search customers…" id="cust-q" oninput="loadCusts()">
+          <button class="btn btn-primary btn-sm ms-auto" onclick="openCustMdl()"><i class="fas fa-plus me-1"></i>Add Customer</button>
+        </div>
+        <div class="row g-2" id="custs-grid"></div>
+      </div>
+
+      <!-- ══ DEBT MANAGEMENT ══ -->
+      <div class="page" id="page-debts">
+        <div class="d-flex gap-2 mb-3 align-items-center flex-wrap">
+          <input class="form-control form-control-sm" style="max-width:240px" placeholder="Search customer to check debt…" id="debt-q" oninput="loadDebtSearch()">
+          <span class="text-muted" style="font-size:.78rem">Search a customer to view &amp; record payments</span>
+        </div>
+        <div id="debt-search-results" class="row g-2 mb-3"></div>
+        <div id="debt-customer-panel" style="display:none">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <span id="debt-panel-title"><i class="fas fa-user me-1"></i>Customer History</span>
+              <button class="btn btn-sm btn-outline-secondary" onclick="closeDebtPanel()"><i class="fas fa-times me-1"></i>Close</button>
+            </div>
+            <div class="card-body pb-0">
+              <div class="row g-3 mb-3">
+                <div class="col-sm-4"><div class="scard"><div class="sicon iy"><i class="fas fa-file-invoice"></i></div><div class="slabel">Total Purchases</div><div class="sval" id="dp-total">₦0</div></div></div>
+                <div class="col-sm-4"><div class="scard"><div class="sicon ig"><i class="fas fa-check-circle"></i></div><div class="slabel">Total Paid</div><div class="sval" id="dp-paid" style="color:var(--sc)">₦0</div></div></div>
+                <div class="col-sm-4"><div class="scard"><div class="sicon ir"><i class="fas fa-clock"></i></div><div class="slabel">Outstanding Debt</div><div class="sval" id="dp-debt" style="color:var(--dn)">₦0</div></div></div>
+              </div>
+            </div>
+            <div class="tw"><table class="table tbl mb-0">
+              <thead><tr><th>Receipt</th><th>Items</th><th>Method</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+              <tbody id="dp-rows"></tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ STAFF ══ -->
+      <div class="page" id="page-staff">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Staff Members</span>
+            <button class="btn btn-primary btn-sm" onclick="openStaffMdl()"><i class="fas fa-plus me-1"></i>Add Staff</button>
+          </div>
+          <div class="tw"><table class="table tbl mb-0">
+            <thead><tr><th>Name</th><th>Username</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="staff-rows"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══ RECEIPTS ══ -->
+      <div class="page" id="page-receipts">
+        <div class="card">
+          <div class="card-header d-flex gap-2 align-items-center">
+            <span>All Receipts</span>
+            <input class="form-control form-control-sm ms-auto" style="max-width:200px" placeholder="Search receipt…" id="rec-q" oninput="loadRecs()">
+          </div>
+          <div class="tw"><table class="table tbl mb-0">
+            <thead><tr><th>Receipt</th><th>Customer</th><th>Method</th><th>Total</th><th>Paid</th><th>Balance</th><th>Date</th><th></th></tr></thead>
+            <tbody id="rec-rows"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══ REPORTS ══ -->
+      <div class="page" id="page-reports">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <strong>Reports &amp; Analytics</strong>
+          <button class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="fas fa-print me-1"></i>Print Report</button>
+        </div>
+        <div class="row g-2 mb-3" id="rep-stats"></div>
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header"><i class="fas fa-calendar-days text-primary me-1"></i>Daily Sales (Last 30 Days)</div>
+              <div class="tw" style="max-height:280px;overflow-y:auto">
+                <table class="table tbl mb-0">
+                  <thead><tr><th>Date</th><th>Txns</th><th>Total</th><th>Paid</th><th>Balance</th></tr></thead>
+                  <tbody id="rep-daily"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header"><i class="fas fa-users text-primary me-1"></i>Performance by Staff</div>
+              <div class="tw">
+                <table class="table tbl mb-0">
+                  <thead><tr><th>Staff</th><th>Transactions</th><th>Revenue</th></tr></thead>
+                  <tbody id="rep-staff"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header"><i class="fas fa-boxes text-primary me-1"></i>Full Product Inventory Report</div>
+              <div class="tw">
+                <table class="table tbl mb-0">
+                  <thead><tr><th>Product</th><th>Category</th><th>Qty</th><th>Buy Price</th><th>Sell Price</th><th>Total Cost</th><th>Paid to Supplier</th><th>Balance to Supplier</th><th>Exp Revenue</th><th>Exp Profit</th><th>Stock Level</th></tr></thead>
+                  <tbody id="rep-prods"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ PROFILE ══ -->
+      <div class="page" id="page-profile">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-6">
+            <div class="card">
+              <div class="card-header"><i class="fas fa-user-circle text-primary me-1"></i>My Profile</div>
+              <div class="card-body">
+                <div class="text-center mb-3">
+                  <div class="av mx-auto mb-2" style="width:58px;height:58px;font-size:1.35rem" id="prof-av">A</div>
+                  <div style="font-weight:700;font-size:.93rem" id="prof-nm">Admin</div>
+                  <span class="badge bg-primary mt-1" id="prof-role">Admin</span>
+                </div>
+                <div class="mb-2"><label class="form-label">Full Name</label><input class="form-control" id="pf-name"></div>
+                <div class="mb-2"><label class="form-label">Username</label><input class="form-control" id="pf-user"></div>
+                <div class="mb-2"><label class="form-label">Phone</label><input class="form-control" id="pf-phone"></div>
+                <button class="btn btn-primary w-100 mb-3" onclick="saveProf()"><i class="fas fa-save me-1"></i>Save Changes</button>
+                <hr>
+                <p style="font-size:.72rem;font-weight:700;color:#64748b;letter-spacing:.05em;text-transform:uppercase" class="mb-2">Change Password</p>
+                <div class="mb-2"><label class="form-label">Current Password</label><input type="password" class="form-control" id="pf-cur"></div>
+                <div class="mb-2"><label class="form-label">New Password</label><input type="password" class="form-control" id="pf-new"></div>
+                <div class="mb-2"><label class="form-label">Confirm New Password</label><input type="password" class="form-control" id="pf-con"></div>
+                <button class="btn btn-outline-danger w-100" onclick="changePW()"><i class="fas fa-lock me-1"></i>Change Password</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══ MODALS ═══ -->
+<!-- Product -->
+<div class="modal fade" id="mdlProd" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="pm-ttl">Add Product</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="pm-id">
+      <div class="row g-2">
+        <div class="col-sm-8"><label class="form-label">Product Name *</label><input class="form-control" id="pm-name" placeholder="e.g. Basmati Rice 50kg"></div>
+        <div class="col-sm-4"><label class="form-label">Unit Type</label>
+          <select class="form-select" id="pm-unit"><option>Pieces</option><option>Bags</option><option>Cartons</option><option>Bottles</option><option>Litres</option><option>Kg</option><option>Meters</option><option>Dozens</option><option>Packs</option><option>Crates</option><option>Yards</option></select>
+        </div>
+        <div class="col-sm-6"><label class="form-label">Category *</label><select class="form-select" id="pm-cat"><option value="">-- Select --</option></select></div>
+        <div class="col-sm-6"><label class="form-label">Supplier Name</label><input class="form-control" id="pm-sup" placeholder="Supplier name"></div>
+        <div class="col-sm-4"><label class="form-label">Quantity *</label><input type="number" class="form-control" id="pm-qty" min="0" oninput="calcPP()"></div>
+        <div class="col-sm-4"><label class="form-label">Buying Price/Unit (₦)</label><input type="number" class="form-control" id="pm-buy" min="0" step="0.01" oninput="calcPP()"></div>
+        <div class="col-sm-4"><label class="form-label">Selling Price/Unit (₦)</label><input type="number" class="form-control" id="pm-sell" min="0" step="0.01" oninput="calcPP()"></div>
+        <div class="col-12"><hr class="my-1"><small class="fw-bold text-muted" style="font-size:.72rem">SUPPLIER PAYMENT TRACKING</small></div>
+        <div class="col-sm-6"><label class="form-label">Total Cost from Supplier (₦)</label><input type="number" class="form-control" id="pm-tc" min="0" step="0.01" oninput="calcPP()" placeholder="Total owed to supplier"></div>
+        <div class="col-sm-6"><label class="form-label">Amount Already Paid (₦)</label><input type="number" class="form-control" id="pm-ap" min="0" step="0.01" oninput="calcPP()" placeholder="What you've paid so far"></div>
+        <div class="col-12" id="pm-prev" style="display:none">
+          <div class="row g-2 p-2 rounded" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:.79rem">
+            <div class="col-6 col-sm-3 text-center"><div class="pm-lbl">Per Unit Cost</div><div class="pm-val" id="pv-uc">₦0</div></div>
+            <div class="col-6 col-sm-3 text-center"><div class="pm-lbl">Exp Revenue</div><div class="pm-val" style="color:var(--pr)" id="pv-rv">₦0</div></div>
+            <div class="col-6 col-sm-3 text-center"><div class="pm-lbl">Exp Profit</div><div class="pm-val" style="color:var(--sc)" id="pv-pf">₦0</div></div>
+            <div class="col-6 col-sm-3 text-center"><div class="pm-lbl">Supplier Bal</div><div class="pm-val" style="color:var(--dn)" id="pv-bl">₦0</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveProd()"><i class="fas fa-save me-1"></i>Save Product</button></div>
+  </div></div>
+</div>
+
+<!-- Category -->
+<div class="modal fade" id="mdlCat" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Manage Categories</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div class="d-flex gap-2 mb-3">
+        <input class="form-control form-control-sm" id="nc-nm" placeholder="Category name *">
+        <input class="form-control form-control-sm" id="nc-dc" placeholder="Description (opt.)">
+        <button class="btn btn-primary btn-sm" onclick="addCat()" style="white-space:nowrap"><i class="fas fa-plus"></i></button>
+      </div>
+      <div id="cat-list"></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- Customer -->
+<div class="modal fade" id="mdlCust" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="cm-ttl">Add Customer</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="cm-id">
+      <div class="row g-2">
+        <div class="col-6"><label class="form-label">First Name *</label><input class="form-control" id="cm-fn"></div>
+        <div class="col-6"><label class="form-label">Last Name *</label><input class="form-control" id="cm-ln"></div>
+        <div class="col-6"><label class="form-label">Other Names</label><input class="form-control" id="cm-on" placeholder="Optional"></div>
+        <div class="col-6"><label class="form-label">Phone</label><input class="form-control" id="cm-ph"></div>
+        <div class="col-6"><label class="form-label">Shop Name</label><input class="form-control" id="cm-sh"></div>
+        <div class="col-6"><label class="form-label">Nickname</label><input class="form-control" id="cm-nk" placeholder="Avoids confusion"></div>
+        <div class="col-12"><label class="form-label">Address</label><input class="form-control" id="cm-ad"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveCust()"><i class="fas fa-save me-1"></i>Save</button></div>
+  </div></div>
+</div>
+
+<!-- Staff -->
+<div class="modal fade" id="mdlStaff" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="sf-ttl">Add Staff</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="sf-id">
+      <div class="row g-2">
+        <div class="col-sm-6"><label class="form-label">Full Name *</label><input class="form-control" id="sf-nm"></div>
+        <div class="col-sm-6"><label class="form-label">Username *</label><input class="form-control" id="sf-us"></div>
+        <div class="col-sm-6"><label class="form-label">Password</label><input type="password" class="form-control" id="sf-pw" placeholder="Blank = keep current"></div>
+        <div class="col-sm-6"><label class="form-label">Phone</label><input class="form-control" id="sf-ph"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveStaff()"><i class="fas fa-save me-1"></i>Save</button></div>
+  </div></div>
+</div>
+
+<!-- Sale detail / Receipt reprint -->
+<div class="modal fade" id="mdlSale" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Sale Details</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body pzone" id="sale-body"></div>
+    <div class="modal-footer flex-wrap gap-2">
+      <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button class="btn btn-outline-primary" onclick="window.print()"><i class="fas fa-print me-1"></i>Print</button>
+      <button class="btn btn-success" id="wa-mdl-btn"><i class="fab fa-whatsapp me-1"></i>WhatsApp</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- Debt payment -->
+<div class="modal fade" id="mdlDebt" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Record Debt Payment</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="db-sid">
+      <div class="alert alert-warning py-2 px-3 mb-3" id="db-info" style="font-size:.79rem"></div>
+      <!-- Payment method for debt -->
+      <div class="mb-2">
+        <label class="form-label">Payment Method</label>
+        <div class="pm-btns">
+          <button class="pm-btn sel-cash" id="dbpm-cash" onclick="selDebtPM('Cash')"><i class="fas fa-money-bill-wave"></i>Cash</button>
+          <button class="pm-btn" id="dbpm-transfer" onclick="selDebtPM('Transfer')"><i class="fas fa-building-columns"></i>Transfer</button>
+          <button class="pm-btn" id="dbpm-pos" onclick="selDebtPM('POS')"><i class="fas fa-credit-card"></i>POS</button>
+        </div>
+      </div>
+      <div class="mb-2"><label class="form-label">Amount Paying Now (₦)</label><input type="number" class="form-control" id="db-amt" min="1"></div>
+      <div class="mb-2"><label class="form-label">Notes</label><input class="form-control" id="db-notes" placeholder="Optional"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-success" onclick="recDebt()"><i class="fas fa-check me-1"></i>Record Payment</button></div>
+  </div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+let ME=null, cart=[], selCID=null, lastRcpt=null, posCF='', prodCF='', prodPF='', CATS=[];
+let selPMethod='Cash', selDebtMethod='Cash';
+let debtPanelCustId=null;
+
+const $=id=>document.getElementById(id);
+const fmt=v=>'₦'+parseFloat(v||0).toLocaleString('en-NG',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fD=d=>new Date(d).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'});
+const fDT=d=>new Date(d).toLocaleString('en-NG',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const esc=s=>(s||'').replace(/'/g,"\\'");
+const pmBadge=m=>m==='Cash'?'b-cash':m==='Transfer'?'b-transfer':'b-pos';
+const pmIcon=m=>m==='Cash'?'fas fa-money-bill-wave':m==='Transfer'?'fas fa-building-columns':'fas fa-credit-card';
+
+async function api(url,method='GET',body=null){
+  const o={method,headers:{'Content-Type':'application/json'}};
+  if(body)o.body=JSON.stringify(body);
+  return (await fetch(url,o)).json();
+}
+
+// ════════════════════════════════════════
+// SIDEBAR
+// ════════════════════════════════════════
+function openSB(){$('sb').classList.add('open');$('ov').classList.add('on');}
+function closeSB(){$('sb').classList.remove('open');$('ov').classList.remove('on');}
+
+// ════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════
+let authTab='admin';
+function switchTab(t){
+  authTab=t;
+  document.querySelectorAll('.auth-tab').forEach((el,i)=>el.classList.toggle('active',(i===0&&t==='admin')||(i===1&&t==='staff')));
+}
+async function doLogin(){
+  const r=await api('/login','POST',{username:$('lu').value,password:$('lp').value,tab:authTab});
+  if(r.success){$('auth-screen').style.display='none';$('app').style.display='block';await initApp();}
+  else{$('lerr').style.display='block';$('lerr').textContent=r.error;}
+}
+async function doLogout(){location.href='/logout';}
+
+async function doForgotPassword(){
+  const msgEl = $('fp-msg');
+  // Show loading state
+  msgEl.style.display = 'block';
+  msgEl.innerHTML = '<div class="alert alert-info py-2 px-3 mb-0" style="font-size:.77rem"><i class="fas fa-spinner fa-spin me-1"></i>Generating temporary password and sending email...</div>';
+
+  try {
+    const r = await api('/api/forgot-password', 'POST', {});
+    if(r.success){
+      msgEl.innerHTML = `<div class="alert alert-success py-2 px-3 mb-0" style="font-size:.77rem">
+        <i class="fas fa-check-circle me-1"></i><strong>Done!</strong> ${r.message}<br>
+        <span style="color:#374151;margin-top:.3rem;display:block">Log in with the temporary password, then go to <strong>My Profile</strong> to set a new one.</span>
+      </div>`;
+    } else {
+      msgEl.innerHTML = `<div class="alert alert-danger py-2 px-3 mb-0" style="font-size:.77rem">
+        <i class="fas fa-circle-exclamation me-1"></i>${r.error}
+      </div>`;
+    }
+  } catch(e) {
+    msgEl.innerHTML = '<div class="alert alert-danger py-2 px-3 mb-0" style="font-size:.77rem"><i class="fas fa-circle-exclamation me-1"></i>Could not connect to the server. Make sure the app is running.</div>';
+  }
+}
+
+// ════════════════════════════════════════
+// NAV CONFIG
+// ════════════════════════════════════════
+const ADMIN_NAV=[
+  {id:'dashboard',label:'Dashboard',icon:'fas fa-gauge-high',sec:'MAIN'},
+  {id:'pos',label:'Make a Sale',icon:'fas fa-cash-register'},
+  {id:'products',label:'Products',icon:'fas fa-box'},
+  {id:'sales-mgmt',label:'Sales Records',icon:'fas fa-chart-line'},
+  {id:'receipts',label:'Receipts',icon:'fas fa-receipt'},
+  {id:'customers',label:'Customers',icon:'fas fa-users'},
+  {id:'debts',label:'Debt Manager',icon:'fas fa-file-invoice-dollar',sec:'FINANCE'},
+  {id:'reports',label:'Reports',icon:'fas fa-chart-pie'},
+  {id:'staff',label:'Staff',icon:'fas fa-id-badge',sec:'MANAGE'},
+  {id:'profile',label:'My Profile',icon:'fas fa-user-circle'},
+];
+const STAFF_NAV=[
+  {id:'pos',label:'Make a Sale',icon:'fas fa-cash-register',sec:'SALES'},
+  {id:'debts',label:'Customer Payments',icon:'fas fa-file-invoice-dollar'},
+  {id:'profile',label:'My Profile',icon:'fas fa-user-circle'},
+];
+const TITLES={dashboard:'Dashboard',pos:'Point of Sale',products:'Products','sales-mgmt':'Sales Records',receipts:'Receipts',customers:'Customers',debts:'Debt Manager',reports:'Reports & Analytics',staff:'Staff Management',profile:'My Profile'};
+
+async function initApp(){
+  ME=await api('/api/me');
+  $('sb-av').textContent=ME.name.charAt(0).toUpperCase();
+  $('sb-nm').textContent=ME.name;
+  $('sb-role').textContent=ME.role==='admin'?'Admin Panel':'Staff Panel';
+  $('sb-r2').textContent=ME.role==='admin'?'Super Admin':'Sales Staff';
+  $('tb-dt').textContent=new Date().toLocaleDateString('en-NG',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  CATS=await api('/api/categories');
+  const items=ME.role==='admin'?ADMIN_NAV:STAFF_NAV;
+  const nav=$('sb-nav');nav.innerHTML='';let lastSec='';
+  items.forEach(it=>{
+    if(it.sec&&it.sec!==lastSec){nav.innerHTML+=`<div class="nav-sec">${it.sec}</div>`;lastSec=it.sec;}
+    nav.innerHTML+=`<div class="nav-it" id="ni-${it.id}" onclick="nav('${it.id}')"><i class="${it.icon}"></i>${it.label}</div>`;
+  });
+  nav(ME.role==='admin'?'dashboard':'pos');
+}
+
+function nav(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-it').forEach(n=>n.classList.remove('on'));
+  const pg=$('page-'+page);if(pg)pg.classList.add('on');
+  const ni=$('ni-'+page);if(ni)ni.classList.add('on');
+  $('pg-title').textContent=TITLES[page]||page;
+  const loaders={dashboard:loadDash,products:loadProds,pos:loadPOS,'sales-mgmt':loadSM,
+    receipts:loadRecs,customers:loadCusts,debts:loadDebtsPage,reports:loadReports,
+    staff:loadStaff,profile:loadProf};
+  if(loaders[page])loaders[page]();
+  closeSB();
+}
+
+// ════════════════════════════════════════
+// PAYMENT METHOD SELECTOR
+// ════════════════════════════════════════
+function selPM(m){
+  selPMethod=m;
+  ['Cash','Transfer','POS'].forEach(x=>{
+    const btn=$('pm-'+x.toLowerCase());
+    btn.className='pm-btn'+(m===x?' sel-'+x.toLowerCase():'');
+  });
+}
+function selDebtPM(m){
+  selDebtMethod=m;
+  ['Cash','Transfer','POS'].forEach(x=>{
+    const btn=$('dbpm-'+x.toLowerCase());
+    btn.className='pm-btn'+(m===x?' sel-'+x.toLowerCase():'');
+  });
+}
+
+// ════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════
+async function loadDash(){
+  const d=await api('/api/dashboard');
+  $('ls-bdg').style.display=d.low_stock_count>0?'inline-flex':'none';
+  $('dash-stats').innerHTML=`
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ib"><i class="fas fa-boxes-stacking"></i></div><div class="slabel">Products</div><div class="sval">${d.total_products}</div><div class="ssub">${Number(d.total_stock_units).toLocaleString()} units</div></div></div>
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon iy"><i class="fas fa-money-bill-trend-up"></i></div><div class="slabel">Exp Revenue</div><div class="sval" style="font-size:.88rem">${fmt(d.total_expected_revenue)}</div></div></div>
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ig"><i class="fas fa-sack-dollar"></i></div><div class="slabel">Exp Profit</div><div class="sval" style="font-size:.88rem;color:var(--sc)">${fmt(d.total_expected_profit)}</div></div></div>
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ip"><i class="fas fa-chart-line"></i></div><div class="slabel">Total Sales</div><div class="sval" style="font-size:.88rem">${fmt(d.total_revenue_realized)}</div><div class="ssub">${d.total_sales} txns</div></div></div>
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon io"><i class="fas fa-sun"></i></div><div class="slabel">Today</div><div class="sval" style="font-size:.88rem">${fmt(d.today_revenue)}</div><div class="ssub">${d.today_sales_count} sales</div></div></div>
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ir"><i class="fas fa-file-invoice-dollar"></i></div><div class="slabel">Total Debts</div><div class="sval" style="font-size:.88rem;color:var(--dn)">${fmt(d.total_debts)}</div><div class="ssub">${d.low_stock_count} low stock</div></div></div>`;
+  const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const md=d.monthly_sales;
+  if(md.length){const mx=Math.max(...md.map(m=>m.total),1);$('dash-chart').innerHTML=md.map(m=>{const h=Math.max(3,Math.round(m.total/mx*85));return`<div class="bcc"><div class="bcv">${fmt(m.total).replace('₦','').split('.')[0]}</div><div class="bcb" style="height:${h}px" title="${fmt(m.total)}"></div><div class="bcl">${MN[m.month-1]}</div></div>`}).join('');}
+  else $('dash-chart').innerHTML='<span style="font-size:.73rem;color:#94a3b8">No sales data yet</span>';
+  const rs=await api('/api/sales?page=1');
+  $('dash-sales').innerHTML=rs.sales.slice(0,6).map(s=>`<tr><td><span class="b b-pr">${s.receipt_no}</span></td><td style="white-space:nowrap">${s.customer}</td><td><span class="b ${pmBadge(s.payment_method)}"><i class="${pmIcon(s.payment_method)} me-1"></i>${s.payment_method}</span></td><td style="font-weight:700;color:var(--sc);white-space:nowrap">${fmt(s.subtotal)}</td><td style="font-size:.74rem;white-space:nowrap">${s.staff}</td><td style="font-size:.7rem;color:#94a3b8;white-space:nowrap">${fD(s.date)}</td></tr>`).join('')||'<tr><td colspan="6" class="text-center text-muted py-3">No sales yet</td></tr>';
+  $('dash-top').innerHTML=d.top_products.length?d.top_products.map((p,i)=>`<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .9rem;border-bottom:1px solid #f1f5f9"><div style="width:19px;height:19px;border-radius:50%;background:var(--prl);color:var(--pr);font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div><div style="flex:1;min-width:0"><div style="font-size:.77rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div style="font-size:.63rem;color:#94a3b8">${p.qty} units sold</div></div><div style="font-size:.77rem;font-weight:700;color:var(--sc);white-space:nowrap">${fmt(p.revenue)}</div></div>`).join(''):'<div class="text-center text-muted p-3" style="font-size:.77rem">No sales yet</div>';
+  $('dash-low').innerHTML=d.low_stock.length?d.low_stock.map(p=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:.4rem .9rem;border-bottom:1px solid #f1f5f9"><span style="font-size:.77rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62%">${p.name}</span><span class="b b-low">${p.quantity} left</span></div>`).join(''):'<div class="text-center p-3" style="color:var(--sc);font-size:.77rem"><i class="fas fa-check-circle me-1"></i>All stock levels fine</div>';
+}
+
+// ════════════════════════════════════════
+// PRODUCTS
+// ════════════════════════════════════════
+async function loadProds(){
+  CATS=await api('/api/categories');
+  const cf=$('prod-cf');cf.innerHTML='<option value="">All Categories</option>'+CATS.map(c=>`<option value="${c.id}">${c.name} (${c.product_count})</option>`).join('');
+  if(prodCF)cf.value=prodCF;
+  const q=$('prod-q')?.value||'';const p=new URLSearchParams();if(q)p.set('q',q);if(prodCF)p.set('category_id',prodCF);if(prodPF)$('prod-pf').value=prodPF;
+  const prods=await api('/api/products?'+p);
+  $('prod-cat-tabs').innerHTML=`<button class="btn btn-sm ${!prodCF?'btn-primary':'btn-outline-secondary'} me-1 mb-1" onclick="prodCF='';loadProds()">All</button>`+CATS.map(c=>`<button class="btn btn-sm ${prodCF==c.id?'btn-primary':'btn-outline-secondary'} me-1 mb-1" onclick="prodCF=${c.id};loadProds()">${c.name}</button>`).join('');  // sync payment filter dropdown
+  if($('prod-pf')){$('prod-pf').value=prodPF;}
+  // Apply payment status filter client-side
+  const filteredProds = prodPF ? prods.filter(p=>p.payment_status===prodPF) : prods;
+  if(!filteredProds.length){$('prods-grid').innerHTML='<div class="col-12 text-center text-muted py-5"><i class="fas fa-box-open fa-3x mb-3 d-block"></i>No products found</div>';return;}
+  $('prods-grid').innerHTML=filteredProds.map(p=>{
+    const pct=p.stock_status==='high'?100:p.stock_status==='medium'?Math.round(p.quantity/50*100):Math.max(4,Math.round(p.quantity/20*100));
+    const fc=p.stock_status==='high'?'sfh':p.stock_status==='medium'?'sfm':'sfl';
+    const pb=p.payment_status==='Fully Paid'?'b-paid':p.payment_status==='Partially Paid'?'b-part':'b-unp';
+    return`<div class="col-6 col-md-4 col-xl-3"><div class="pcard"><div class="pact"><button class="btn btn-sm btn-outline-primary py-0 px-1" onclick="openProdMdl(${p.id})"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="delProd(${p.id})"><i class="fas fa-trash"></i></button></div><div class="pc-cat">${p.category_name}</div><div class="pc-name">${p.name}</div><div class="d-flex justify-content-between align-items-center mb-1"><span class="pc-sell">${fmt(p.selling_price)}</span><span class="pc-buy">cost: ${fmt(p.buying_price)}</span></div><div class="d-flex align-items-center gap-1 mb-1"><span style="font-size:.7rem;color:#64748b"><b>${p.quantity}</b> ${p.unit_type}</span><span class="b b-${p.stock_status} ms-auto">${p.stock_status.charAt(0).toUpperCase()+p.stock_status.slice(1)}</span></div><div class="sbar"><div class="${fc}" style="height:100%;width:${pct}%;border-radius:3px"></div></div><div class="pc-metrics"><div><div class="pm-lbl">Exp Revenue</div><div class="pm-val" style="color:var(--pr)">${fmt(p.expected_revenue)}</div></div><div><div class="pm-lbl">Exp Profit</div><div class="pm-val" style="color:var(--sc)">${fmt(p.expected_profit)}</div></div><div><div class="pm-lbl">Supplier</div><div class="pm-val" style="font-size:.63rem;color:#64748b">${p.supplier_name||'—'}</div></div><div><div class="pm-lbl">Payment</div><span class="b ${pb}">${p.payment_status}</span></div></div>${p.amount_remaining>0?`<div style="margin-top:.32rem;font-size:.66rem;color:var(--dn)"><i class="fas fa-circle-exclamation me-1"></i>Supplier balance: <b>${fmt(p.amount_remaining)}</b></div>`:''}</div></div>`;
+  }).join('');
+}
+
+async function openProdMdl(id=null){
+  CATS=await api('/api/categories');
+  $('pm-ttl').textContent=id?'Edit Product':'Add Product';
+  $('pm-id').value=id||'';
+  ['pm-name','pm-qty','pm-buy','pm-sell','pm-tc','pm-ap','pm-sup'].forEach(i=>$(i).value='');
+  $('pm-prev').style.display='none';
+  $('pm-cat').innerHTML=CATS.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')||'<option value="">Add a category first</option>';
+  if(id){const p=await api(`/api/products/${id}`);$('pm-name').value=p.name;$('pm-unit').value=p.unit_type;$('pm-cat').value=p.category_id;$('pm-qty').value=p.quantity;$('pm-buy').value=p.buying_price;$('pm-sell').value=p.selling_price;$('pm-tc').value=p.total_cost;$('pm-ap').value=p.amount_paid;$('pm-sup').value=p.supplier_name||'';calcPP();}
+  new bootstrap.Modal($('mdlProd')).show();
+}
+function calcPP(){
+  const qty=parseFloat($('pm-qty').value)||0,buy=parseFloat($('pm-buy').value)||0,sell=parseFloat($('pm-sell').value)||0,tc=parseFloat($('pm-tc').value)||0,ap=parseFloat($('pm-ap').value)||0;
+  if(qty>0||buy>0||sell>0||tc>0){$('pm-prev').style.display='block';$('pv-uc').textContent=tc>0&&qty>0?fmt(tc/qty):fmt(buy);$('pv-rv').textContent=fmt(sell*qty);$('pv-pf').textContent=fmt((sell-buy)*qty);$('pv-bl').textContent=fmt(Math.max(0,tc-ap));}
+}
+async function saveProd(){
+  const id=$('pm-id').value;
+  const data={name:$('pm-name').value,category_id:$('pm-cat').value,unit_type:$('pm-unit').value,quantity:$('pm-qty').value,buying_price:$('pm-buy').value,selling_price:$('pm-sell').value,total_cost:$('pm-tc').value||0,amount_paid:$('pm-ap').value||0,supplier_name:$('pm-sup').value};
+  if(!data.name||!data.category_id){alert('Name and category are required.');return;}
+  const r=await api(id?`/api/products/${id}`:'/api/products',id?'PUT':'POST',data);
+  if(r.success){bootstrap.Modal.getInstance($('mdlProd')).hide();loadProds();}else alert(r.error||'Error');
+}
+async function delProd(id){if(!confirm('Archive this product?'))return;await api(`/api/products/${id}`,'DELETE');loadProds();}
+
+// CATEGORIES
+async function openCatMdl(){await renderCats();new bootstrap.Modal($('mdlCat')).show();}
+async function renderCats(){CATS=await api('/api/categories');$('cat-list').innerHTML=CATS.map(c=>`<div class="d-flex align-items-center gap-2 p-2 border rounded mb-1"><span style="flex:1;font-weight:600;font-size:.81rem">${c.name}</span><span class="badge bg-secondary">${c.product_count}</span><button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="delCat(${c.id})" ${c.product_count>0?'disabled title="Has products"':''}><i class="fas fa-trash"></i></button></div>`).join('')||'<div class="text-muted" style="font-size:.79rem">No categories yet.</div>';}
+async function addCat(){const nm=$('nc-nm').value.trim();if(!nm){alert('Name required');return;}const r=await api('/api/categories','POST',{name:nm,description:$('nc-dc').value});if(r.success){$('nc-nm').value='';$('nc-dc').value='';await renderCats();}else alert(r.error);}
+async function delCat(id){if(!confirm('Delete?'))return;const r=await api(`/api/categories/${id}`,'DELETE');if(r.success)await renderCats();else alert(r.error);}
+
+// ════════════════════════════════════════
+// POS
+// ════════════════════════════════════════
+async function loadPOS(){
+  cart=[];selCID=null;posCF='';selPMethod='Cash';selPM('Cash');
+  renderCart();clrCustPOS();
+  CATS=await api('/api/categories');
+  $('pos-cat-tabs').innerHTML=`<button class="btn btn-sm btn-primary me-1 mb-1" onclick="posCF='';loadTiles()">All</button>`+CATS.map(c=>`<button class="btn btn-sm btn-outline-secondary me-1 mb-1" onclick="posCF=${c.id};loadTiles()">${c.name}</button>`).join('');
+  await loadTiles();
+  $('rcpt-area').style.display='none';
+}
+async function loadTiles(){
+  const q=$('pos-q')?.value||'';const p=new URLSearchParams();if(q)p.set('q',q);if(posCF)p.set('category_id',posCF);
+  const prods=await api('/api/products?'+p);
+  $('pos-tiles').innerHTML=prods.map(p=>`<div class="col-6 col-sm-4"><div class="ptile${p.quantity<=0?' oos':''}" onclick="${p.quantity>0?`addCart(${p.id},'${esc(p.name)}',${p.selling_price},${p.quantity},'${p.unit_type}')`:''}">${p.quantity<=0?'<div style="font-size:.58rem;color:var(--dn);font-weight:700;text-transform:uppercase;margin-bottom:.1rem">Out of Stock</div>':''}<div class="pt-n">${p.name}</div><div class="pt-p">${fmt(p.selling_price)}</div><div class="pt-a">${p.quantity>0?`${p.quantity} ${p.unit_type} left`:''}</div></div></div>`).join('')||'<div class="col-12 text-center text-muted py-4">No products found</div>';
+}
+
+function addCart(id,name,price,maxQty,unit){
+  const ex=cart.find(i=>i.id===id);
+  if(ex){if(ex.qty>=maxQty){alert('Not enough stock!');return;}ex.qty++;ex.total=ex.qty*ex.unitPrice;}
+  else cart.push({id,name,price,unitPrice:price,qty:1,maxQty,unit,total:price});
+  renderCart();
+}
+function renderCart(){
+  const has=cart.length>0;
+  $('cart-empty').style.display=has?'none':'block';
+  $('cart-body').style.display=has?'block':'none';
+  $('clr-btn').style.display=has?'inline-flex':'none';
+  if(!has)return;
+  $('cart-rows').innerHTML=cart.map((it,i)=>`<tr><td style="font-weight:600;font-size:.76rem;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${it.name}">${it.name}</td><td><input type="number" class="qi" value="${it.qty}" min="1" max="${it.maxQty}" onchange="updQ(${i},this.value)"></td><td><input type="number" class="pi${it.unitPrice!==it.price?' custom':''}" value="${it.unitPrice}" step="0.01" onchange="updP(${i},this.value)" title="${it.unitPrice!==it.price?'Custom price':'Standard price'}"></td><td style="font-weight:700;white-space:nowrap;font-size:.76rem">${fmt(it.total)}</td><td><button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="rmItem(${i})"><i class="fas fa-times"></i></button></td></tr>`).join('');
+  $('cart-sub').textContent=fmt(cart.reduce((a,i)=>a+i.total,0));
+  calcBal();
+}
+function updQ(i,v){const q=Math.max(1,Math.min(parseInt(v)||1,cart[i].maxQty));cart[i].qty=q;cart[i].total=q*cart[i].unitPrice;renderCart();}
+function updP(i,v){const p=parseFloat(v)||0;cart[i].unitPrice=p;cart[i].total=cart[i].qty*p;renderCart();}
+function rmItem(i){cart.splice(i,1);renderCart();}
+function clearCart(){cart=[];selCID=null;clrCustPOS();$('pos-paid').value='';renderCart();}
+function calcBal(){
+  const sub=cart.reduce((a,i)=>a+i.total,0);
+  const pv=$('pos-paid')?.value;const paid=pv?parseFloat(pv):sub;
+  const bal=Math.max(0,sub-paid);
+  const be=$('pos-bal');if(be){be.textContent=fmt(bal);be.style.color=bal>0?'#dc2626':'#16a34a';}
+}
+
+async function srchCustPOS(){
+  const q=$('cpos-q').value;if(!q){$('cpos-res').innerHTML='';return;}
+  const cs=await api(`/api/customers?q=${encodeURIComponent(q)}`);
+  $('cpos-res').innerHTML=cs.slice(0,4).map(c=>`<div class="cust-result" onclick="selCust(${c.id},'${esc(c.full_name)}','${esc(c.shop_name||'')}',${c.total_debt})"><b>${c.full_name}</b>${c.nickname?` (${c.nickname})`:''} ${c.phone?`<span style="color:#64748b">| ${c.phone}</span>`:''}<br>${c.shop_name?`<span style="color:#64748b">${c.shop_name}</span>`:''} ${c.total_debt>0?`<span class="debt-b ms-1">Owes: ${fmt(c.total_debt)}</span>`:''}</div>`).join('')||'<div style="font-size:.72rem;color:#94a3b8;padding:.28rem">No customers found</div>';
+}
+function selCust(id,name,shop,debt){selCID=id;$('cpos-q').value=name;$('cpos-res').innerHTML='';const el=$('cpos-sel');el.style.display='block';el.innerHTML=`<i class="fas fa-user-check me-1"></i><b>${name}</b>${shop?' — '+shop:''}${debt>0?` <span class="debt-b ms-1">Owes: ${fmt(debt)}</span>`:'`'}`;}
+function clrCustPOS(){selCID=null;if($('cpos-q'))$('cpos-q').value='';if($('cpos-sel'))$('cpos-sel').style.display='none';if($('cpos-res'))$('cpos-res').innerHTML='';}
+
+async function checkout(){
+  if(!cart.length){alert('Cart is empty');return;}
+  const sub=cart.reduce((a,i)=>a+i.total,0);
+  const pv=$('pos-paid').value;const amtPaid=pv?parseFloat(pv):sub;
+  if(amtPaid<sub&&!selCID&&!confirm('Partial payment with no customer selected. Continue as walk-in credit?'))return;
+  const items=cart.map(i=>({product_id:i.id,product_name:i.name,quantity:i.qty,unit_price:i.unitPrice,original_price:i.price,total:i.total}));
+  const r=await api('/api/sales','POST',{items,customer_id:selCID,amount_paid:amtPaid,payment_method:selPMethod,notes:$('pos-notes').value});
+  if(!r.success){alert(r.error||'Sale failed');return;}
+  const sale=await api(`/api/sales/${r.sale_id}`);
+  lastRcpt=sale;buildReceipt(sale,$('rcpt-display'));
+  cart=[];$('pos-paid').value='';$('pos-notes').value='';
+  $('rcpt-area').style.display='block';renderCart();loadTiles();
+  setTimeout(()=>$('rcpt-area').scrollIntoView({behavior:'smooth'}),100);
+}
+
+function buildReceipt(s,container){
+  const items=s.items.map(i=>`<div class="rr"><span style="flex:1;padding-right:.4rem">${i.product_name} ×${i.quantity}${i.unit_price!==i.original_price?' <small style="color:#f59e0b">*</small>':''}</span><span>${fmt(i.unit_price)}/unit</span></div><div class="rr"><span></span><span style="font-weight:600">${fmt(i.total)}</span></div><hr style="margin:.1rem 0;border:none;border-top:1px dashed #e5e7eb">`).join('');
+  container.innerHTML=`<div class="rbox"><h3><i class="fas fa-globe-africa" style="color:var(--pr)"></i> ABH WORLDWIDE</h3><div class="rsub">MULTIPURPOSE COMPANY<br>Inventory &amp; Sales Management</div><hr style="border:none;border-top:1px dashed #d1d5db;margin:.38rem 0"><div class="rr"><span>Receipt:</span><strong>${s.receipt_no}</strong></div><div class="rr"><span>Date:</span><span>${fDT(s.date)}</span></div><div class="rr"><span>Cashier:</span><span>${s.staff}</span></div><div class="rr"><span>Customer:</span><span>${s.customer?s.customer.name:'Walk-in'}</span></div><div class="rr"><span>Payment:</span><span><i class="${pmIcon(s.payment_method)} me-1"></i>${s.payment_method}</span></div><hr style="border:none;border-top:1px dashed #d1d5db;margin:.38rem 0">${items}<hr style="border:none;border-top:2px solid #d1d5db;margin:.38rem 0"><div class="rr rtot"><span>SUBTOTAL</span><span>${fmt(s.subtotal)}</span></div><div class="rr" style="color:var(--sc)"><span>AMOUNT PAID</span><strong>${fmt(s.amount_paid)}</strong></div>${s.balance_due>0?`<div class="rr" style="color:var(--dn)"><span>BALANCE DUE</span><strong>${fmt(s.balance_due)}</strong></div>`:''}<hr style="border:none;border-top:1px dashed #d1d5db;margin:.38rem 0"><div style="text-align:center;font-size:.63rem;color:#9ca3af">Thank you for your business!<br>ABH Worldwide Multipurpose Company</div></div>`;
+}
+
+function shareWA(){if(lastRcpt)shareWAData(lastRcpt);}
+function shareWAData(s){let m=`*ABH WORLDWIDE MULTIPURPOSE COMPANY*\nReceipt: ${s.receipt_no}\nDate: ${fDT(s.date)}\nCashier: ${s.staff}\nCustomer: ${s.customer?s.customer.name:'Walk-in'}\nPayment: ${s.payment_method}\n\n`;s.items.forEach(i=>{m+=`• ${i.product_name} ×${i.quantity} @ ₦${parseFloat(i.unit_price).toLocaleString()} = ₦${parseFloat(i.total).toLocaleString()}\n`;});m+=`\n*TOTAL: ₦${parseFloat(s.subtotal).toLocaleString()}*\nPaid: ₦${parseFloat(s.amount_paid).toLocaleString()}`;if(s.balance_due>0)m+=`\nBalance Due: ₦${parseFloat(s.balance_due).toLocaleString()}`;m+=`\n\nThank you for your business!`;window.open(`https://wa.me/?text=${encodeURIComponent(m)}`,'_blank');}
+function newSale(){$('rcpt-area').style.display='none';clrCustPOS();clearCart();loadTiles();}
+
+// ════════════════════════════════════════
+// SALES MANAGEMENT
+// ════════════════════════════════════════
+async function loadSM(){
+  const staff=await api('/api/staff');const sf=$('sm-staff');const sv=sf.value;
+  sf.innerHTML='<option value="">All Staff</option>'+staff.map(s=>`<option value="${s.id}">${s.full_name}</option>`).join('');sf.value=sv;
+  const p=new URLSearchParams({page:1});const q=$('sm-q')?.value;const d=$('sm-date')?.value;
+  if(q)p.set('q',q);if(d){p.set('date_from',d);p.set('date_to',d);}if(sf.value)p.set('staff_id',sf.value);
+  const data=await api('/api/sales?'+p);
+  $('sm-rows').innerHTML=data.sales.map(s=>`<tr><td><span class="b b-pr">${s.receipt_no}</span></td><td style="white-space:nowrap">${s.customer}</td><td><span class="badge bg-secondary">${s.item_count}</span></td><td><span class="b ${pmBadge(s.payment_method)}"><i class="${pmIcon(s.payment_method)} me-1"></i>${s.payment_method}</span></td><td style="font-weight:700;white-space:nowrap">${fmt(s.subtotal)}</td><td style="color:var(--sc);white-space:nowrap">${fmt(s.amount_paid)}</td><td style="color:${s.balance_due>0?'var(--dn)':'var(--sc)'};white-space:nowrap">${fmt(s.balance_due)}</td><td><span class="b ${s.payment_status==='Paid'?'b-paid':s.payment_status==='Partial'?'b-part':'b-unp'}">${s.payment_status}</span></td><td style="font-size:.73rem;white-space:nowrap">${s.staff}</td><td style="font-size:.7rem;color:#94a3b8;white-space:nowrap">${fD(s.date)}</td><td class="d-flex gap-1"><button class="btn btn-sm btn-outline-primary py-0 px-1" onclick="viewSale(${s.id})"><i class="fas fa-eye"></i></button>${s.balance_due>0?`<button class="btn btn-sm btn-outline-success py-0 px-1" onclick="openDebtMdl(${s.id},${s.balance_due})" title="Record payment"><i class="fas fa-hand-holding-dollar"></i></button>`:''}</td></tr>`).join('')||'<tr><td colspan="11" class="text-center text-muted py-4">No sales found</td></tr>';
+}
+
+async function viewSale(id){
+  const s=await api(`/api/sales/${id}`);lastRcpt=s;
+  buildReceipt(s,$('sale-body'));
+  $('wa-mdl-btn').onclick=()=>{bootstrap.Modal.getInstance($('mdlSale')).hide();shareWAData(s);};
+  new bootstrap.Modal($('mdlSale')).show();
+}
+
+// ════════════════════════════════════════
+// DEBT MANAGEMENT PAGE
+// ════════════════════════════════════════
+async function loadDebtsPage(){
+  debtPanelCustId=null;
+  $('debt-customer-panel').style.display='none';
+  $('debt-q').value='';
+  // Auto-load all customers with outstanding debt
+  const cs=await api('/api/customers?q=');
+  const debtors=cs.filter(c=>c.total_debt>0);
+  if(debtors.length===0){
+    $('debt-search-results').innerHTML='<div class="col-12"><div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>No outstanding debts! All customers are fully paid up.</div></div>';
+    return;
+  }
+  $('debt-search-results').innerHTML='<div class="col-12 mb-2"><span style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em"><i class="fas fa-triangle-exclamation text-warning me-1"></i>'+debtors.length+' Customer'+( debtors.length===1?'':'s')+' with Outstanding Debt</span></div>'+
+  debtors.map(c=>`<div class="col-12 col-sm-6 col-lg-4"><div class="card" style="cursor:pointer;border:2px solid #fca5a5" onclick="openDebtPanel(${c.id},'${esc(c.full_name)}')"><div class="card-body p-3"><div class="d-flex align-items-center gap-2 mb-1"><div class="av" style="width:28px;height:28px;font-size:.68rem;background:#dc2626">${c.first_name.charAt(0)}</div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.full_name}${c.nickname?' ('+c.nickname+')':''}</div>${c.shop_name?`<div style="font-size:.7rem;color:#64748b">${c.shop_name}</div>`:''}</div></div><div class="debt-b mt-1">${fmt(c.total_debt)} owed</div><div class="mt-2" style="font-size:.72rem;color:#94a3b8"><i class="fas fa-hand-pointer me-1"></i>Click to view &amp; record payment</div></div></div></div>`).join('');
+}
+
+async function loadDebtSearch(){
+  const q=$('debt-q').value.trim();
+  if(!q){await loadDebtsPage();return;}
+  const cs=await api(`/api/customers?q=${encodeURIComponent(q)}`);
+  $('debt-search-results').innerHTML=cs.slice(0,8).map(c=>`<div class="col-12 col-sm-6 col-lg-4"><div class="card" style="cursor:pointer;border:${c.total_debt>0?'2px solid #fca5a5':'1.5px solid #e2e8f0'}" onclick="openDebtPanel(${c.id},'${esc(c.full_name)}')"><div class="card-body p-3"><div class="d-flex align-items-center gap-2 mb-1"><div class="av" style="width:28px;height:28px;font-size:.68rem;background:${c.total_debt>0?'#dc2626':'var(--pr)'}">${c.first_name.charAt(0)}</div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.full_name}${c.nickname?` (${c.nickname})`:''}</div>${c.shop_name?`<div style="font-size:.7rem;color:#64748b">${c.shop_name}</div>`:''}</div></div>${c.total_debt>0?`<div class="debt-b">${fmt(c.total_debt)} owed</div>`:'<div class="b b-paid">No debt</div>'}<div class="mt-2" style="font-size:.72rem;color:#94a3b8"><i class="fas fa-hand-pointer me-1"></i>Click to view full history</div></div></div></div>`).join('')||'<div class="col-12 text-muted" style="font-size:.8rem">No customers found</div>';
+}
+
+async function openDebtPanel(custId, custName){
+  debtPanelCustId=custId;
+  $('debt-panel-title').innerHTML=`<i class="fas fa-user me-1"></i>${custName} — Payment History`;
+  const history=await api(`/api/customers/${custId}/history`);
+  const totalPurchases=history.reduce((a,s)=>a+s.subtotal,0);
+  const totalPaid=history.reduce((a,s)=>a+s.amount_paid,0);
+  const totalDebt=history.reduce((a,s)=>a+s.balance_due,0);
+  $('dp-total').textContent=fmt(totalPurchases);
+  $('dp-paid').textContent=fmt(totalPaid);
+  $('dp-debt').textContent=fmt(totalDebt);
+  $('dp-rows').innerHTML=history.map(s=>`<tr><td><span class="b b-pr">${s.receipt_no}</span></td><td><span class="badge bg-secondary">${s.item_count}</span></td><td><span class="b ${pmBadge(s.payment_method)}"><i class="${pmIcon(s.payment_method)} me-1"></i>${s.payment_method}</span></td><td style="font-weight:700;white-space:nowrap">${fmt(s.subtotal)}</td><td style="color:var(--sc);white-space:nowrap">${fmt(s.amount_paid)}</td><td style="color:${s.balance_due>0?'var(--dn)':'var(--sc)'};font-weight:${s.balance_due>0?'700':'400'};white-space:nowrap">${fmt(s.balance_due)}</td><td><span class="b ${s.payment_status==='Paid'?'b-paid':s.payment_status==='Partial'?'b-part':'b-unp'}">${s.payment_status}</span></td><td style="font-size:.7rem;color:#94a3b8;white-space:nowrap">${fDT(s.date)}</td><td>${s.balance_due>0?`<button class="btn btn-sm btn-success py-0 px-2" onclick="openDebtMdl(${s.sale_id},${s.balance_due})"><i class="fas fa-hand-holding-dollar me-1"></i>Pay</button>`:''}</td></tr>`).join('')||'<tr><td colspan="9" class="text-center text-muted py-3">No purchase history</td></tr>';
+  $('debt-customer-panel').style.display='block';
+  setTimeout(()=>$('debt-customer-panel').scrollIntoView({behavior:'smooth'}),100);
+}
+
+function closeDebtPanel(){$('debt-customer-panel').style.display='none';debtPanelCustId=null;}
+
+// DEBT PAYMENT MODAL
+function openDebtMdl(saleId,balance){
+  $('db-sid').value=saleId;
+  $('db-info').innerHTML=`Outstanding balance: <strong>${fmt(balance)}</strong>`;
+  $('db-amt').value='';$('db-amt').max=balance;$('db-notes').value='';
+  selDebtMethod='Cash';selDebtPM('Cash');
+  new bootstrap.Modal($('mdlDebt')).show();
+}
+async function recDebt(){
+  const sid=$('db-sid').value;const amt=parseFloat($('db-amt').value);
+  if(!amt||amt<=0){alert('Enter a valid amount');return;}
+  const r=await api('/api/debts/pay','POST',{sale_id:parseInt(sid),amount:amt,payment_method:selDebtMethod,notes:$('db-notes').value});
+  if(r.success){
+    bootstrap.Modal.getInstance($('mdlDebt')).hide();
+    // Refresh wherever we are
+    if(debtPanelCustId){
+      const nt=$('debt-panel-title').textContent.replace(/.*—\s*/,'').replace(' — Payment History','');
+      await openDebtPanel(debtPanelCustId, nt);
+    }
+    loadSM();
+  }else alert(r.error);
+}
+
+// ════════════════════════════════════════
+// CUSTOMERS
+// ════════════════════════════════════════
+async function loadCusts(){
+  const q=$('cust-q')?.value||'';const cs=await api(`/api/customers?q=${encodeURIComponent(q)}`);
+  $('custs-grid').innerHTML=cs.length?cs.map(c=>`<div class="col-12 col-sm-6 col-lg-4"><div class="card h-100"><div class="card-body p-3"><div class="d-flex align-items-center gap-2 mb-2"><div class="av" style="background:${c.total_debt>0?'#dc2626':'var(--pr)'}">${c.first_name.charAt(0)}</div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.full_name}${c.nickname?` <span style="color:#94a3b8;font-weight:400;font-size:.76rem">(${c.nickname})</span>`:''}</div>${c.shop_name?`<div style="font-size:.7rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.shop_name}</div>`:''}</div>${c.total_debt>0?`<span class="debt-b">${fmt(c.total_debt)}</span>`:'<span class="b b-paid">Clear</span>'}</div>${c.phone?`<div style="font-size:.73rem;color:#64748b;margin-bottom:.4rem"><i class="fas fa-phone me-1"></i>${c.phone}</div>`:''}<div class="d-flex gap-1 mt-1"><button class="btn btn-sm btn-outline-primary flex-fill" onclick='openCustMdl(${JSON.stringify(c)})'><i class="fas fa-edit me-1"></i>Edit</button><button class="btn btn-sm btn-outline-secondary flex-fill" onclick="openDebtPanel(${c.id},'${esc(c.full_name)}');nav('debts')"><i class="fas fa-history me-1"></i>History</button></div></div></div></div>`).join(''):'<div class="col-12 text-center text-muted py-5"><i class="fas fa-users fa-3x mb-3 d-block"></i>No customers yet</div>';
+}
+function openCustMdl(c=null){
+  if(typeof c==='number')c=null;
+  $('cm-ttl').textContent=c?'Edit Customer':'Add Customer';
+  $('cm-id').value=c?c.id:'';$('cm-fn').value=c?c.first_name:'';$('cm-ln').value=c?c.last_name:'';
+  $('cm-on').value=c?c.other_names||'':'';$('cm-ph').value=c?c.phone||'':'';
+  $('cm-sh').value=c?c.shop_name||'':'';$('cm-nk').value=c?c.nickname||'':'';
+  $('cm-ad').value=c?c.address||'':'';
+  new bootstrap.Modal($('mdlCust')).show();
+}
+async function saveCust(){
+  const id=$('cm-id').value;const fn=$('cm-fn').value.trim(),ln=$('cm-ln').value.trim();
+  if(!fn||!ln){alert('First and last name required');return;}
+  const data={first_name:fn,last_name:ln,other_names:$('cm-on').value,phone:$('cm-ph').value,shop_name:$('cm-sh').value,nickname:$('cm-nk').value,address:$('cm-ad').value};
+  const r=await api(id?`/api/customers/${id}`:'/api/customers',id?'PUT':'POST',data);
+  if(r.success){bootstrap.Modal.getInstance($('mdlCust')).hide();loadCusts();}else alert(r.error||'Error');
+}
+
+// ════════════════════════════════════════
+// STAFF
+// ════════════════════════════════════════
+async function loadStaff(){
+  const staff=await api('/api/staff');
+  $('staff-rows').innerHTML=staff.map(u=>`<tr><td><div class="d-flex align-items-center gap-2"><div class="av" style="width:27px;height:27px;font-size:.65rem">${u.full_name.charAt(0)}</div><span style="font-weight:600">${u.full_name}</span></div></td><td><code style="background:#f1f5f9;padding:.1rem .32rem;border-radius:4px;font-size:.73rem">${u.username}</code></td><td style="font-size:.79rem">${u.phone||'—'}</td><td><span class="b ${u.active?'b-paid':'b-unp'}">${u.active?'Active':'Inactive'}</span></td><td class="d-flex gap-1"><button class="btn btn-sm btn-outline-primary py-0 px-1" onclick="openStaffMdl(${u.id},'${esc(u.full_name)}','${u.username}','${u.phone||''}')"><i class="fas fa-edit"></i></button><button class="btn btn-sm ${u.active?'btn-outline-warning':'btn-outline-success'} py-0 px-1" onclick="togStaff(${u.id},${!u.active})">${u.active?'<i class="fas fa-ban"></i>':'<i class="fas fa-check"></i>'}</button></td></tr>`).join('')||'<tr><td colspan="5" class="text-center text-muted py-4">No staff members yet</td></tr>';
+}
+function openStaffMdl(id=null,name='',uname='',phone=''){$('sf-ttl').textContent=id?'Edit Staff':'Add Staff';$('sf-id').value=id||'';$('sf-nm').value=name;$('sf-us').value=uname;$('sf-pw').value='';$('sf-ph').value=phone;new bootstrap.Modal($('mdlStaff')).show();}
+async function saveStaff(){const id=$('sf-id').value;const data={full_name:$('sf-nm').value,username:$('sf-us').value,phone:$('sf-ph').value};const pw=$('sf-pw').value;if(pw)data.password=pw;if(!data.full_name||!data.username){alert('Name and username required');return;}const r=await api(id?`/api/staff/${id}`:'/api/staff',id?'PUT':'POST',data);if(r.success){bootstrap.Modal.getInstance($('mdlStaff')).hide();loadStaff();}else alert(r.error||'Error');}
+async function togStaff(id,active){await api(`/api/staff/${id}`,'PUT',{active});loadStaff();}
+
+// ════════════════════════════════════════
+// RECEIPTS
+// ════════════════════════════════════════
+async function loadRecs(){
+  const q=$('rec-q')?.value||'';const data=await api(`/api/sales?q=${encodeURIComponent(q)}&page=1`);
+  $('rec-rows').innerHTML=data.sales.map(s=>`<tr><td><span class="b b-pr">${s.receipt_no}</span></td><td style="white-space:nowrap">${s.customer}</td><td><span class="b ${pmBadge(s.payment_method)}"><i class="${pmIcon(s.payment_method)} me-1"></i>${s.payment_method}</span></td><td style="font-weight:700;white-space:nowrap">${fmt(s.subtotal)}</td><td style="color:var(--sc);white-space:nowrap">${fmt(s.amount_paid)}</td><td style="color:${s.balance_due>0?'var(--dn)':'var(--sc)'};white-space:nowrap">${fmt(s.balance_due)}</td><td style="font-size:.7rem;color:#94a3b8;white-space:nowrap">${fDT(s.date)}</td><td><button class="btn btn-sm btn-outline-primary py-0 px-1" onclick="viewSale(${s.id})" title="View &amp; Print"><i class="fas fa-print"></i></button></td></tr>`).join('');
+}
+
+// ════════════════════════════════════════
+// REPORTS
+// ════════════════════════════════════════
+async function loadReports(){
+  const d=await api('/api/reports');
+  $('rep-stats').innerHTML=`
+    <div class="col-6 col-md-3"><div class="scard"><div class="sicon iy"><i class="fas fa-money-bill-wave"></i></div><div class="slabel">Exp Revenue</div><div class="sval" style="font-size:.88rem">${fmt(d.summary.total_expected_revenue)}</div></div></div>
+    <div class="col-6 col-md-3"><div class="scard"><div class="sicon ig"><i class="fas fa-sack-dollar"></i></div><div class="slabel">Exp Profit</div><div class="sval" style="font-size:.88rem;color:var(--sc)">${fmt(d.summary.total_expected_profit)}</div></div></div>
+    <div class="col-6 col-md-3"><div class="scard"><div class="sicon ip"><i class="fas fa-chart-pie"></i></div><div class="slabel">Realized Sales</div><div class="sval" style="font-size:.88rem">${fmt(d.summary.total_realized)}</div></div></div>
+    <div class="col-6 col-md-3"><div class="scard"><div class="sicon ir"><i class="fas fa-file-invoice-dollar"></i></div><div class="slabel">Outstanding Debt</div><div class="sval" style="font-size:.88rem;color:var(--dn)">${fmt(d.summary.total_debt)}</div></div></div>`;
+  $('rep-daily').innerHTML=d.daily.map(r=>`<tr><td style="white-space:nowrap">${fD(r.day)}</td><td>${r.txns}</td><td style="font-weight:600;white-space:nowrap">${fmt(r.subtotal)}</td><td style="color:var(--sc);white-space:nowrap">${fmt(r.paid)}</td><td style="color:${r.balance>0?'var(--dn)':'var(--sc)'};white-space:nowrap">${fmt(r.balance)}</td></tr>`).join('')||'<tr><td colspan="5" class="text-center text-muted">No data yet</td></tr>';
+  $('rep-staff').innerHTML=d.by_staff.map(s=>`<tr><td style="font-weight:600">${s.name}</td><td>${s.txns}</td><td style="font-weight:600;color:var(--sc);white-space:nowrap">${fmt(s.revenue)}</td></tr>`).join('')||'<tr><td colspan="3" class="text-center text-muted">No data yet</td></tr>';
+  $('rep-prods').innerHTML=d.products.map(p=>`<tr><td style="font-weight:600;white-space:nowrap">${p.name}</td><td><span class="b b-gray">${p.category_name}</span></td><td><b>${p.quantity}</b> <small>${p.unit_type}</small></td><td style="white-space:nowrap">${fmt(p.buying_price)}</td><td style="white-space:nowrap">${fmt(p.selling_price)}</td><td style="white-space:nowrap">${fmt(p.total_cost)}</td><td style="color:var(--sc);white-space:nowrap">${fmt(p.amount_paid)}</td><td style="color:${p.amount_remaining>0?'var(--dn)':'var(--sc)'};font-weight:${p.amount_remaining>0?700:400};white-space:nowrap">${fmt(p.amount_remaining)}</td><td style="color:var(--pr);font-weight:600;white-space:nowrap">${fmt(p.expected_revenue)}</td><td style="color:var(--sc);font-weight:600;white-space:nowrap">${fmt(p.expected_profit)}</td><td><span class="b b-${p.stock_status}">${p.stock_status}</span></td></tr>`).join('');
+}
+
+// ════════════════════════════════════════
+// PROFILE
+// ════════════════════════════════════════
+async function loadProf(){
+  const me=await api('/api/me');
+  $('prof-av').textContent=me.name.charAt(0).toUpperCase();
+  $('prof-nm').textContent=me.name;
+  $('prof-role').textContent=me.role==='admin'?'Super Admin':'Sales Staff';
+  $('pf-name').value=me.name;$('pf-user').value=me.username;$('pf-phone').value=me.phone||'';
+}
+async function saveProf(){
+  const r=await api('/api/me/update','POST',{full_name:$('pf-name').value,username:$('pf-user').value,phone:$('pf-phone').value});
+  if(r.success){alert('Profile updated successfully!');loadProf();}else alert(r.error||'Error');
+}
+async function changePW(){
+  const np=$('pf-new').value,cp=$('pf-con').value;
+  if(np!==cp){alert('Passwords do not match');return;}
+  if(np.length<4){alert('Password must be at least 4 characters');return;}
+  const r=await api('/api/me/update','POST',{current_password:$('pf-cur').value,new_password:np});
+  if(r.success){alert('Password changed successfully!');['pf-cur','pf-new','pf-con'].forEach(i=>$(i).value='');}else alert(r.error||'Error');
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+window.addEventListener('load',async()=>{
+  try{const me=await api('/api/me');if(me.id){$('auth-screen').style.display='none';$('app').style.display='block';await initApp();}}catch(e){}
+});
+</script>
+</body>
+</html>
