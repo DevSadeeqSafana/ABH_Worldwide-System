@@ -827,7 +827,7 @@ async function loadDash(){
   const d=await api('/api/dashboard');
   $('ls-bdg').style.display=d.low_stock_count>0?'inline-flex':'none';
   $('dash-stats').innerHTML=`
-    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ib"><i class="fas fa-boxes-stacking"></i></div><div class="slabel">Products</div><div class="sval">${d.total_products}</div><div class="ssub">${Number(d.total_stock_units).toLocaleString()} units</div></div></div>
+    <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ib"><i class="fas fa-box"></i></div><div class="slabel">Products</div><div class="sval">${d.total_products}</div><div class="ssub">${Number(d.total_stock_units).toLocaleString()} units</div></div></div>
     <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon iy"><i class="fas fa-money-bill-trend-up"></i></div><div class="slabel">Exp Revenue</div><div class="sval" style="font-size:.88rem">${fmt(d.total_expected_revenue)}</div></div></div>
     <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ig"><i class="fas fa-sack-dollar"></i></div><div class="slabel">Exp Profit</div><div class="sval" style="font-size:.88rem;color:var(--sc)">${fmt(d.total_expected_profit)}</div></div></div>
     <div class="col-6 col-md-4 col-xl-2"><div class="scard"><div class="sicon ip"><i class="fas fa-chart-line"></i></div><div class="slabel">Total Sales</div><div class="sval" style="font-size:.88rem">${fmt(d.total_revenue_realized)}</div><div class="ssub">${d.total_sales} txns</div></div></div>
